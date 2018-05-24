@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>KAJ term paper</title>
+    <link rel="stylesheet" href="scss/dist/index.css">
+
+<body>
+    <div class="blacky"></div>
+
+
+    <div id="intro" class="intro">
+        <div class="span-parent">
+            <span class="stIntro">
+                Lorem ipsum dolor
+            </span>
+            <br>
+            <span class="stIntro">
+                sit amet
+            </span>
+            <br>
+            <a href="#signinPart" class="button-transparent" >Sign in</a>
+            <a href="#signupPart" class="button-transparent" >Sign up</a>
+        </div>
+    </div>
+
+
+    <div id="signinPart" class="loginPage">
+        <form>
+            <div class="form-group">
+                <label for="usernameLogin">Your username:</label>
+                <input type="text" class="form-control" id="usernameLogin" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="passwordLogin">Password:</label>
+                <input type="password" class="form-control" id="passwordLogin" placeholder="Enter password">
+                <small id="registerHelp" class="form-text text-muted">Not yet registered? Register
+                    <a href="#signupPart">here</a>
+                </small>
+            </div>
+            <button id="signInButton" type="submit" class="btn btn-primary">Login</button>
+            <div>
+                <small id="errorSignIn" class="error"></small>
+            </div>
+        </form>
+    </div>
+
+
+    <div id="signupPart" class="loginPage">
+        <form>
+            <div class="form-group">
+                <label for="usernameRegister">Your new username:</label>
+                <input type="text" class="form-control" id="usernameRegister" placeholder="Enter new username">
+            </div>
+            <div class="form-group">
+                <label for="passwordRegister1">Password:</label>
+                <input type="password" class="form-control" id="passwordRegister1" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <label for="passwordRegister2">Verify password:</label>
+                <input type="password" class="form-control" id="passwordRegister2" placeholder="Enter the same password">
+            </div>
+            <button id="signUpButton" type="submit" class="btn btn-primary">Sign up</button>
+            <div>
+                <small id="errorSignUp" class="error"></small>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/dist/index.js"></script>
+</html>
