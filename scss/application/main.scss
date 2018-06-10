@@ -240,7 +240,7 @@ body{
   }
 }
 
-@media (max-width:600px){
+@media all and (max-width:600px){
   body{
     background-image: url("../../resources/fire.jpg");
     background-size: cover;
@@ -252,6 +252,7 @@ body{
     height: 100vh;
   }
 
+
   .sorry{
     margin: 15px 15px 15px 15px;
     color: white;
@@ -259,9 +260,18 @@ body{
     display: flex;
   }
 
+  #appartementForm{
+    display: none;
+  }
+  #changeAppart{
+    display: none;
+  }
+
+
   .navbar{
     display: none;
   }
+
   .changeAppart{
     display: none;
   }
