@@ -1,34 +1,57 @@
-window.location.hash = '#intro';
+import FakeDatabase from './database';
 
-function showErrorUnderSignIn(text){
-    $('#errorSignIn').text(text);
-}
+(function(){
+    const database = new FakeDatabase();
 
-function showErrorUnderSignUp(text){
-    $('#errorSignUp').text(text);
-}
-
-function signInButtonClicked(){
-    const username = $('#usernameLogin').val();
-    const password = $('#passwordLogin').val();
-
-
-    //TODO error all fields must be filled
-    showErrorUnderSignIn("Error clicking on button sign in")
-}
-
-function signUpButtonClicked(){
-    const username = $('#usernameRegister').val();
-    const password1 = $('#passwordRegister1').val();
-    const password2 = $('#passwordRegister2').val();
-
-    if(password1 !== password2){
-        showErrorUnderSignUp("Provided passwords are not the same.");
-        return;
+    if(database.isLogin()){
+        window.location.replace("application.html");
+    } else {
+        window.location.hash = '#intro';
     }
 
-    showErrorUnderSignUp("Error clicking on button sign up");
-}
+    function showErrorUnderSignIn(text){
+        $('#errorSignIn').text(text);
+    }
 
-$('#signInButton').on("click", () => signInButtonClicked());
-$('#signUpButton').on("click", () => signUpButtonClicked());
+    function showErrorUnderSignUp(text){
+        $('#errorSignUp').text(text);
+    }
+
+    $('#signInButton').on("click", () => signInButtonClicked());
+    $('#signUpButton').on("click", () => signUpButtonClicked());
+
+    function signInButtonClicked(){
+        const username = $('#usernameLogin').val().trim();
+        const password = $('#passwordLogin').val().trim();
+
+        if(username === "" || password === ""){
+            showErrorUnderSignIn("All fields must be filled.");
+
+        } else if(!database.loginUser(username, password)){
+            showErrorUnderSignIn("Input wrong username or password.");
+
+        } else {
+            window.location.replace("application.html");
+        }
+    }
+
+    function signUpButtonClicked(){
+        const username = $('#usernameRegister').val().trim();
+        const password1 = $('#passwordRegister1').val().trim();
+        const password2 = $('#passwordRegister2').val().trim();
+
+        if(username === "" || password1 === "" || password2 === ""){
+            showErrorUnderSignUp("All fields must be filled.");
+            return;
+        }
+        if(password1 !== password2){
+            showErrorUnderSignUp("Provided passwords are not the same.");
+            return;
+        }
+        if(database.registerUser(username, password1)){
+            window.location.hash = '#signinPart'
+        } else {
+            showErrorUnderSignUp("Username already exists.");
+        }
+    }
+})();
