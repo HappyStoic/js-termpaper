@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="scss/dist/application.css">
     <title>Lorem Ipsum</title>
 
-    <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
-    <script type="text/javascript">Loader.load();</script>
+    <script src="https://api.mapy.cz/loader.js"></script>
+    <script>Loader.load();</script>
 </head>
 
 <body>
@@ -52,7 +52,7 @@
                 </tbody>
             </table>
 
-            <span id="createAppartBut" type="button" class="btn btn-primary">Create new</span>
+            <span id="createAppartBut" class="btn btn-primary">Create new</span>
         </form>
     </div>
 
@@ -69,7 +69,7 @@
                     <span id="backToTable">back</span>
                 </small>
             </div>
-            <span id="submitApart" type="button" class="btn btn-primary">Create</span>
+            <span id="submitApart" class="btn btn-primary">Create</span>
             <div>
                 <small id="errorCreatingApart" class="error"></small>
             </div>
@@ -82,7 +82,7 @@
                 <label for="roommateName">Name:</label>
                 <input type="text" class="form-control" id="roommateName" placeholder="Enter (existing) username of your roomate">
             </div>
-            <span id="addRoommateConfirm" type="button" class="btn btn-primary">Add roommate</span>
+            <span id="addRoommateConfirm" class="btn btn-primary">Add roommate</span>
             <div>
                 <small id="errorInvitingRoommate" class="error"></small>
             </div>
@@ -97,11 +97,11 @@
         <form id="todo-creator-form" class="form-group">
             <label for="todoTextArea">Enter todo text:</label>
             <textarea class="form-control" id="todoTextArea" rows="4"></textarea>
-            <span id="addTodoConfirm" type="button" class="btn btn-primary">Create card</span>
+            <span id="addTodoConfirm" class="btn btn-primary">Create card</span>
         </form>
         </div>
 
-        <section id="todo-list-left">
+        <div id="todo-list-left">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              id="plus-symbol" viewBox="0 0 844.801 844.801" style="enable-background:new 0 0 844.801 844.801;"
              xml:space="preserve">
@@ -131,9 +131,10 @@
                     </g>
                 </svg>
             </div>
-        </section>
+        </div>
 
         <div id="todo-list-right"></div>
+    </div>
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/dist/application.js"></script>
