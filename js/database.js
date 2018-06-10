@@ -129,4 +129,20 @@ export default class FakeDatabase{
            return todo.apart === apartment;
         });
     }
+
+    eraseTodo(text, apart){
+        let content = text.substring(text.indexOf("<br>")+4, text.length);
+        let author = $(text).filter("span").get(0).innerText;
+
+        let todos = this._getAllTodos();
+        for(let i = 0; i < todos.length; i++){
+            let todo = todos[i];
+            if(todo.apart === apart && todo.author === author && todo.text === content){
+                todos.splice(i, 1);
+                break;
+            }
+        }
+        localStorage.setObject("todos", todos);
+
+    }
 }

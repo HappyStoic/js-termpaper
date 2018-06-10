@@ -155,6 +155,22 @@ var FakeDatabase = function () {
                 return todo.apart === apartment;
             });
         }
+    }, {
+        key: "eraseTodo",
+        value: function eraseTodo(text, apart) {
+            var content = text.substring(text.indexOf("<br>") + 4, text.length);
+            var author = $(text).filter("span").get(0).innerText;
+
+            var todos = this._getAllTodos();
+            for (var i = 0; i < todos.length; i++) {
+                var todo = todos[i];
+                if (todo.apart === apart && todo.author === author && todo.text === content) {
+                    todos.splice(i, 1);
+                    break;
+                }
+            }
+            localStorage.setObject("todos", todos);
+        }
     }]);
 
     return FakeDatabase;

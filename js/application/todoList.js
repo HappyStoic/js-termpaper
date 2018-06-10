@@ -18,6 +18,12 @@ function showTodoList(){
        showCard(todo.author, todo.text);
     });
 
+
+    ($(".todoCard")).toArray().forEach((elem) => {
+        elem.addEventListener("dragstart", onStartDragging, false);
+    });
+
+
     $('#todo-list-layout').show();
 }
 
@@ -38,6 +44,7 @@ $('#addTodoConfirm').on("click", () => {
     const todoText = $textArea.val().trim();
     if(todoText === "") return;
 
+
     $textArea.text("");
     const author = localStorage.getObject("login");
     db.createNewTodoCard(author, localStorage.getObject("curApart"), todoText);
@@ -45,10 +52,43 @@ $('#addTodoConfirm').on("click", () => {
     $('#todo-creator').hide();
 });
 
-function showCard(author, todoText){
+function showCard(author, todoText, without){
     const createdBy = "<span>" + author + "</span>";
     const text =  createdBy + "<br>" + todoText;
-    const lineHtml = "<div class=\"todoCard\">" + text + "</div>";
+    const lineHtml = "<div class=\"todoCard\" draggable='true'>" + text + "</div>";
 
     $('#todo-list-right').append(lineHtml);
 }
+
+function onStartDragging(ev){
+    ev.dataTransfer.setData("text", ev.target.innerHTML);
+    console.log(ev.target.innerHTML);
+}
+
+const $binDiv = $("#bin-div");
+
+$binDiv.get(0).addEventListener("dragover", (event) => {
+    const $bin = $('#bin');
+    $bin.removeClass("bin-normal");
+    $bin.addClass("bin-draged-over");
+    event.preventDefault();
+}, false);
+
+$binDiv.get(0).addEventListener("dragleave", (event) => {
+    const $bin = $('#bin');
+    $bin.removeClass("bin-draged-over");
+    $bin.addClass("bin-normal");
+    event.preventDefault();
+}, false);
+
+$binDiv.get(0).addEventListener("drop", (event) => {
+    const $bin = $('#bin');
+    $bin.removeClass("bin-draged-over");
+    $bin.addClass("bin-normal");
+
+    const toEraseList = event.dataTransfer.getData("text");
+    db.eraseTodo(toEraseList, localStorage.getObject("curApart"));
+    showTodoList();
+
+    event.preventDefault();
+}, false);

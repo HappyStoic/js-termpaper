@@ -358,6 +358,10 @@ function showTodoList() {
         showCard(todo.author, todo.text);
     });
 
+    $(".todoCard").toArray().forEach(function (elem) {
+        elem.addEventListener("dragstart", onStartDragging, false);
+    });
+
     $('#todo-list-layout').show();
 }
 
@@ -385,13 +389,46 @@ $('#addTodoConfirm').on("click", function () {
     $('#todo-creator').hide();
 });
 
-function showCard(author, todoText) {
+function showCard(author, todoText, without) {
     var createdBy = "<span>" + author + "</span>";
     var text = createdBy + "<br>" + todoText;
-    var lineHtml = "<div class=\"todoCard\">" + text + "</div>";
+    var lineHtml = "<div class=\"todoCard\" draggable='true'>" + text + "</div>";
 
     $('#todo-list-right').append(lineHtml);
 }
+
+function onStartDragging(ev) {
+    ev.dataTransfer.setData("text", ev.target.innerHTML);
+    console.log(ev.target.innerHTML);
+}
+
+var $binDiv = $("#bin-div");
+
+$binDiv.get(0).addEventListener("dragover", function (event) {
+    var $bin = $('#bin');
+    $bin.removeClass("bin-normal");
+    $bin.addClass("bin-draged-over");
+    event.preventDefault();
+}, false);
+
+$binDiv.get(0).addEventListener("dragleave", function (event) {
+    var $bin = $('#bin');
+    $bin.removeClass("bin-draged-over");
+    $bin.addClass("bin-normal");
+    event.preventDefault();
+}, false);
+
+$binDiv.get(0).addEventListener("drop", function (event) {
+    var $bin = $('#bin');
+    $bin.removeClass("bin-draged-over");
+    $bin.addClass("bin-normal");
+
+    var toEraseList = event.dataTransfer.getData("text");
+    db.eraseTodo(toEraseList, localStorage.getObject("curApart"));
+    showTodoList();
+
+    event.preventDefault();
+}, false);
 
 },{"../database":7}],7:[function(require,module,exports){
 "use strict";
@@ -549,6 +586,22 @@ var FakeDatabase = function () {
             return this._getAllTodos().filter(function (todo) {
                 return todo.apart === apartment;
             });
+        }
+    }, {
+        key: "eraseTodo",
+        value: function eraseTodo(text, apart) {
+            var content = text.substring(text.indexOf("<br>") + 4, text.length);
+            var author = $(text).filter("span").get(0).innerText;
+
+            var todos = this._getAllTodos();
+            for (var i = 0; i < todos.length; i++) {
+                var todo = todos[i];
+                if (todo.apart === apart && todo.author === author && todo.text === content) {
+                    todos.splice(i, 1);
+                    break;
+                }
+            }
+            localStorage.setObject("todos", todos);
         }
     }]);
 

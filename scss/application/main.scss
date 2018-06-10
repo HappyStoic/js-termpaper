@@ -188,15 +188,21 @@ body{
     }
 
     #bin-div{
-      .bin{
+      .bin-normal{
         width: 15vw;
         height: 40vh;
         fill: white; stroke: white;
       }
-      &:hover *{
+      .bin-draged-over{
+        width: 15vw;
+        height: 40vh;
         transform: rotate(2deg);
         fill: red; stroke: red;
       }
+      //&:hover *{
+      //  transform: rotate(2deg);
+      //  fill: red; stroke: red;
+      //}
     }
   }
 
@@ -217,6 +223,10 @@ body{
       word-wrap:break-word;
       background-color: yellow;
       margin: 5vh 5vw;
+
+      &:hover{
+        cursor: move;
+      }
 
       span{
         color: blue;
