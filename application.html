@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="scss/dist/application.css">
+    <title>Lorem Ipsum</title>
+
+    <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
+    <script type="text/javascript">Loader.load();</script>
+</head>
+
+<body>
+    <div class="blacky"></div>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="my-nav-header-intro">Apartment:</span>
+                <span id="curApartBar" class="my-nav-header">Unknown apartement</span>
+            </div>
+            <div class="my-navigation-posit">
+            <ul class="nav my-navigation my-navigation-posit">
+                <li><a>Todo list</a></li>
+                <li><a id="map-button">Map</a></li>
+                <li><a>//TODO</a></li>
+            </ul>
+            <ul class="nav my-navigation-posit my-navigation navbar-right">
+                <li><a id="changeAppartBut"><span></span> Change appartement</a></li>
+                <li><a href="index.html" id="logoutBut">Logout</a></li>
+
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="changeAppart" class="changeAppart">
+        <form id="appartementForm">
+            <div>Choose an appartement you want to see.</div>
+
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                </tr>
+                </thead>
+                <tbody id="apartTable">
+                </tbody>
+            </table>
+
+            <span id="createAppartBut" type="button" class="btn btn-primary">Create new</span>
+        </form>
+    </div>
+    <!--TODO-->
+    <div id="createAppart" class="changeAppart">
+        <form id="appartCreateForm" >
+            <div class="form-group">
+                <label for="apartname">Name:</label>
+                <input type="text" class="form-control" id="apartname" placeholder="Enter name of an apartment">
+            </div>
+            <div class="form-group">
+                <label for="apartaddress">Address:</label>
+                <input type="text" class="form-control" id="apartaddress" placeholder="Enter an address">
+                <small class="form-text text-muted">Go
+                    <span id="backToTable">back</span>
+                </small>
+            </div>
+            <span id="submitApart" type="button" class="btn btn-primary">Create</span>
+            <div>
+                <small id="errorCreatingApart" class="error"></small>
+            </div>
+        </form>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/dist/application.js"></script>
+</body>
+</html>
