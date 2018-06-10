@@ -130,12 +130,43 @@ body{
 
 #todo-list-layout{
   display: flex;
-  border: 2px blue solid;
   flex: 1;
+
+
+  #todo-creator{
+    width: 100vw;
+    height: 80vh;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    textarea{
+      max-width: 21vw;
+    }
+
+    form {
+      transition: all 500ms;
+      padding: 40px;
+      background-color: white;
+      width: 25vw;
+      font-size: 1.5em;
+    }
+    span {
+      margin-top: 7px;
+    }
+
+    input {
+      padding: 20px 15px;
+    }
+
+  }
 
   #todo-list-left{
     flex-grow: 2;
-    border: 1px red solid;
+    min-width: 20vw;
 
     display: flex;
     flex-direction: column;
@@ -170,7 +201,6 @@ body{
   }
 
   #todo-list-right{
-    border: 1px red solid;
     flex-grow: 8;
     overflow-y: scroll;
     font-size: 1.5em;
@@ -181,11 +211,18 @@ body{
     justify-content: space-around;
 
     .todoCard{
-      padding: 5px;
+      min-width: 10vw;
+      padding: 10px;
       max-width: 20vw;
       word-wrap:break-word;
       background-color: yellow;
-      margin: auto;
+      margin: 5vh 5vw;
+
+      span{
+        color: blue;
+        font-style: italic;
+      }
+
     }
   }
 

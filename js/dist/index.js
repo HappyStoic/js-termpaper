@@ -31,10 +31,11 @@ var FakeDatabase = function () {
         key: "initDatabase",
         value: function initDatabase() {
             var emptyObject = {};
+            var emptyArray = [];
             localStorage.setObject("users", emptyObject);
             localStorage.setObject("aparts", emptyObject);
             localStorage.setObject("usersToAparts", emptyObject);
-            localStorage.setObject("todos", emptyObject);
+            localStorage.setObject("todos", emptyArray);
         }
     }, {
         key: "registerUser",
@@ -43,8 +44,13 @@ var FakeDatabase = function () {
             if (users[name] !== undefined) {
                 return false;
             }
+
+            var usersToAparts = this._getAllUsersToAparts();
+            usersToAparts[name] = [];
+
             users[name] = { 'password': password };
             localStorage.setObject("users", users);
+            localStorage.setObject("usersToAparts", usersToAparts);
             return true;
         }
     }, {
@@ -75,6 +81,7 @@ var FakeDatabase = function () {
             if (allAparts[name] !== undefined) {
                 return false;
             }
+            this.assignApartToUser(localStorage.getObject("login"), name);
             allAparts[name] = { "address": address };
             localStorage.setObject("aparts", allAparts);
             return true;
@@ -84,6 +91,13 @@ var FakeDatabase = function () {
         value: function getAddressOfCurApart() {
             var curApart = localStorage.getObject("curApart");
             if (curApart === null) return null;else return this._getAllAparts()[curApart].address;
+        }
+    }, {
+        key: "getApartsOfLoggedUser",
+        value: function getApartsOfLoggedUser() {
+            var login = localStorage.getObject("login");
+            var usersToAparts = this._getAllUsersToAparts();
+            return usersToAparts[login];
         }
     }, {
         key: "_getAllAparts",
@@ -96,8 +110,51 @@ var FakeDatabase = function () {
             return localStorage.getObject("users");
         }
     }, {
-        key: "addApartToUser",
-        value: function addApartToUser() {}
+        key: "_getAllUsersToAparts",
+        value: function _getAllUsersToAparts() {
+            return localStorage.getObject("usersToAparts");
+        }
+    }, {
+        key: "_getAllTodos",
+        value: function _getAllTodos() {
+            return localStorage.getObject("todos");
+        }
+    }, {
+        key: "existsUser",
+        value: function existsUser(username) {
+            var users = this._getAllUsers();
+            return users[username] !== undefined;
+        }
+    }, {
+        key: "assignApartToUser",
+        value: function assignApartToUser(username, apartname) {
+            var usersToAparts = this._getAllUsersToAparts();
+            var userAparts = usersToAparts[username];
+            if (!userAparts.includes(apartname)) {
+                userAparts.push(apartname);
+                localStorage.setObject("usersToAparts", usersToAparts);
+            }
+        }
+    }, {
+        key: "getAddress",
+        value: function getAddress(apartment) {
+            return this._getAllAparts()[apartment].address;
+        }
+    }, {
+        key: "createNewTodoCard",
+        value: function createNewTodoCard(author, apart, content) {
+            var newCard = { "apart": apart, "author": author, "text": content };
+            var todos = this._getAllTodos();
+            todos.push(newCard);
+            localStorage.setObject("todos", todos);
+        }
+    }, {
+        key: "getTodosInApart",
+        value: function getTodosInApart(apartment) {
+            return this._getAllTodos().filter(function (todo) {
+                return todo.apart === apartment;
+            });
+        }
     }]);
 
     return FakeDatabase;

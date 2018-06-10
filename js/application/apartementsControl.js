@@ -4,20 +4,6 @@ export {showTable}
 
 const db = new FakeDatabase();
 
-
-$("body").get(0).addEventListener("click", function(e){
-
-    const $target = $(e.target);
-    if (!$target.closest("#appartementForm").length) {
-        $('#changeAppart').hide();
-    }
-
-    if (!$target.closest("#appartCreateForm").length) {
-        $('#createAppart').hide();
-    }
-
-}, true);
-
 function addTableRecord(name, address){
     const lineHtml = "<tr>\n" +
         "                    <td>" + name + "</td>\n" +
@@ -29,11 +15,11 @@ function addTableRecord(name, address){
 
 function showTable(){
     $('#apartTable').html("");
-    const allAparts = db._getAllAparts();
+    const allAparts = db.getApartsOfLoggedUser();
 
-    for(var name in allAparts){
-        addTableRecord(name, allAparts[name].address)
-    }
+    allAparts.forEach((apartName) => {
+        addTableRecord(apartName, db.getAddress(apartName))
+    });
     $('#changeAppart').show();
 }
 

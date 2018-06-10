@@ -27,7 +27,7 @@ module.exports = function(grunt) {
                 },
                 src: ['js/application/application.js', "js/application/apartementsControl.js",
                 "js/application/navigation.js", "js/application/map.js",
-                "js/application/loader.js", "js/application/todoList.js"],        // zdroj napsaný v ES 6
+                "js/application/roommateInvite.js", "js/application/todoList.js"],        // zdroj napsaný v ES 6
                 dest: 'js/dist/application.js'     // cílový soubor transpilovaný do ES 5.1
             }
         },

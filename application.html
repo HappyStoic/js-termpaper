@@ -26,6 +26,7 @@
                 <li><a>//TODO</a></li>
             </ul>
             <ul class="nav my-navigation-posit my-navigation navbar-right">
+                <li><a id="addRoommateBut"><span></span> Add roommate</a></li>
                 <li><a id="changeAppartBut"><span></span> Change appartement</a></li>
                 <li><a href="index.html" id="logoutBut">Logout</a></li>
 
@@ -52,7 +53,7 @@
             <span id="createAppartBut" type="button" class="btn btn-primary">Create new</span>
         </form>
     </div>
-    <!--TODO-->
+
     <div id="createAppart" class="changeAppart">
         <form id="appartCreateForm" >
             <div class="form-group">
@@ -73,9 +74,31 @@
         </form>
     </div>
 
+    <div id="inviteRoommate-layout" class="changeAppart">
+        <form id="inviteForm" >
+            <div class="form-group">
+                <label for="roommateName">Name:</label>
+                <input type="text" class="form-control" id="roommateName" placeholder="Enter (existing) username of your roomate">
+            </div>
+            <span id="addRoommateConfirm" type="button" class="btn btn-primary">Add roommate</span>
+            <div>
+                <small id="errorInvitingRoommate" class="error"></small>
+            </div>
+        </form>
+    </div>
+
     <div id="map"></div>
 
     <div id="todo-list-layout">
+
+        <div id="todo-creator">
+        <form id="todo-creator-form" class="form-group">
+            <label for="todoTextArea">Enter todo text:</label>
+            <textarea class="form-control" id="todoTextArea" rows="4"></textarea>
+            <span id="addTodoConfirm" type="button" class="btn btn-primary">Create card</span>
+        </form>
+        </div>
+
         <section id="todo-list-left">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              id="plus-symbol" viewBox="0 0 844.801 844.801" style="enable-background:new 0 0 844.801 844.801;"
@@ -108,10 +131,7 @@
             </div>
         </section>
 
-        <div id="todo-list-right">
-
-        </div>
-    </div>
+        <div id="todo-list-right"></div>
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/dist/application.js"></script>
