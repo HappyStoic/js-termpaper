@@ -33,6 +33,8 @@ var FakeDatabase = function () {
             var emptyObject = {};
             localStorage.setObject("users", emptyObject);
             localStorage.setObject("aparts", emptyObject);
+            localStorage.setObject("usersToAparts", emptyObject);
+            localStorage.setObject("todos", emptyObject);
         }
     }, {
         key: "registerUser",
@@ -93,6 +95,9 @@ var FakeDatabase = function () {
         value: function _getAllUsers() {
             return localStorage.getObject("users");
         }
+    }, {
+        key: "addApartToUser",
+        value: function addApartToUser() {}
     }]);
 
     return FakeDatabase;

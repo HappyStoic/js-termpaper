@@ -1,6 +1,7 @@
 import FakeDatabase from './../database';
 import {showTable} from "./apartementsControl";
 import {hideMap} from "./map";
+import {hideTodoList} from "./todoList";
 
 const db = new FakeDatabase();
 
@@ -10,3 +11,4 @@ localStorage.removeItem("curApart");
 $('#createAppart').hide();
 showTable();
 hideMap();
+hideTodoList();

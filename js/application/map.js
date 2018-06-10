@@ -7,10 +7,6 @@ let mapForApart = null;  // If curApart is different -> I need to reload map
 const defaultCoords = {x: 14.41790, y: 50.12655}; // Coords for center of Prague
 
 function showMap(){
-    //hide everything else first
-    $('#changeAppart').hide();
-    $('#createAppart').hide();
-
     if(!mapLoadedAlready || mapForApart !== getCurApartment()){
         initMap();
     } else {

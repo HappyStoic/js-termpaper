@@ -7,6 +7,7 @@ body{
   z-index: -2;
   height: 100vh; //TODO just test
   width: 100vw;
+
   display: flex;
   flex-direction: column;
 }
@@ -122,20 +123,71 @@ body{
   }
 }
 
-//.map-parent{
-//  display: flex;
-//  flex-direction: column;
-//}
-
 #map{
-  //width:600px;
-  //height:400px;
   flex: 1;
-  //flex-flow: column;
-  //overflow: auto;
-
   height: 100vh;
-  //width: 100vw;
+}
 
-  //flex-direction: column;
+#todo-list-layout{
+  display: flex;
+  border: 2px blue solid;
+  flex: 1;
+
+  #todo-list-left{
+    flex-grow: 2;
+    border: 1px red solid;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    fill: white;
+    align-items: center;
+
+    #plus-symbol{
+      flex: 0 0 auto;
+      padding: 4px;
+      width: 15vw;
+      height: 15vh;
+
+      &:hover{
+         stroke: white;
+        fill: gray;
+        stroke-width: 2em;
+      }
+    }
+
+    #bin-div{
+      .bin{
+        width: 15vw;
+        height: 40vh;
+        fill: white; stroke: white;
+      }
+      &:hover *{
+        transform: rotate(2deg);
+        fill: red; stroke: red;
+      }
+    }
+  }
+
+  #todo-list-right{
+    border: 1px red solid;
+    flex-grow: 8;
+    overflow-y: scroll;
+    font-size: 1.5em;
+    max-height: 93vh;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .todoCard{
+      padding: 5px;
+      max-width: 20vw;
+      word-wrap:break-word;
+      background-color: yellow;
+      margin: auto;
+    }
+  }
+
+
 }

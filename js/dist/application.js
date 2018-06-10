@@ -78,7 +78,7 @@ $('#apartTable').on("click", function (e) {
     //TODO jestli je neco ukazano z predchoziho bytu, tak to schovej
 });
 
-},{"../database":5}],2:[function(require,module,exports){
+},{"../database":6}],2:[function(require,module,exports){
 "use strict";
 
 var _database = require("./../database");
@@ -89,6 +89,8 @@ var _apartementsControl = require("./apartementsControl");
 
 var _map = require("./map");
 
+var _todoList = require("./todoList");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var db = new _database2.default();
@@ -98,8 +100,9 @@ localStorage.removeItem("curApart");
 $('#createAppart').hide();
 (0, _apartementsControl.showTable)();
 (0, _map.hideMap)();
+(0, _todoList.hideTodoList)();
 
-},{"./../database":5,"./apartementsControl":1,"./map":3}],3:[function(require,module,exports){
+},{"./../database":6,"./apartementsControl":1,"./map":3,"./todoList":5}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -123,10 +126,6 @@ var mapForApart = null; // If curApart is different -> I need to reload map
 var defaultCoords = { x: 14.41790, y: 50.12655 }; // Coords for center of Prague
 
 function showMap() {
-    //hide everything else first
-    $('#changeAppart').hide();
-    $('#createAppart').hide();
-
     if (!mapLoadedAlready || mapForApart !== getCurApartment()) {
         initMap();
     } else {
@@ -205,7 +204,7 @@ function hideMap() {
     $('#map').hide();
 }
 
-},{"../database":5}],4:[function(require,module,exports){
+},{"../database":6}],4:[function(require,module,exports){
 "use strict";
 
 var _database = require("../database");
@@ -216,6 +215,8 @@ var _apartementsControl = require("./apartementsControl");
 
 var _map = require("./map");
 
+var _todoList = require("./todoList");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var db = new _database2.default();
@@ -225,23 +226,48 @@ $('#logoutBut').on("click", function () {
 });
 
 $('#changeAppartBut').on("click", function () {
+    (0, _todoList.hideTodoList)();
     (0, _map.hideMap)();
     (0, _apartementsControl.showTable)();
 });
 
 $('#map-button').on("click", function () {
-    (0, _map.showMap)();
+    if ($('#map').is(":visible")) {
+        (0, _map.hideMap)();
+    } else {
+        $('#changeAppart').hide();
+        $('#createAppart').hide();
+        (0, _todoList.hideTodoList)();
+        (0, _map.showMap)();
+    }
 });
 
-// $('#curApartBar').popover({trigger: 'manual'}).on('hover', showPop());
-//
-// function showPop(){
-//     if ($('#curApartBar').data('state') === 'hover') {
-//         $('#curApartBar').popover('show');
-//     }
-// }
+$('#todo-list-button').on("click", function () {
+    (0, _map.hideMap)();
+    $('#changeAppart').hide();
+    $('#createAppart').hide();
+    (0, _todoList.showTodoList)();
+});
 
-},{"../database":5,"./apartementsControl":1,"./map":3}],5:[function(require,module,exports){
+},{"../database":6,"./apartementsControl":1,"./map":3,"./todoList":5}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.showTodoList = showTodoList;
+exports.hideTodoList = hideTodoList;
+
+
+function showTodoList() {
+    $('#todo-list-layout').show();
+}
+
+function hideTodoList() {
+    $('#todo-list-layout').hide();
+}
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -276,6 +302,8 @@ var FakeDatabase = function () {
             var emptyObject = {};
             localStorage.setObject("users", emptyObject);
             localStorage.setObject("aparts", emptyObject);
+            localStorage.setObject("usersToAparts", emptyObject);
+            localStorage.setObject("todos", emptyObject);
         }
     }, {
         key: "registerUser",
@@ -336,6 +364,9 @@ var FakeDatabase = function () {
         value: function _getAllUsers() {
             return localStorage.getObject("users");
         }
+    }, {
+        key: "addApartToUser",
+        value: function addApartToUser() {}
     }]);
 
     return FakeDatabase;
@@ -343,4 +374,4 @@ var FakeDatabase = function () {
 
 exports.default = FakeDatabase;
 
-},{}]},{},[2,1,4,3]);
+},{}]},{},[2,1,4,3,5]);

@@ -1,6 +1,7 @@
 import FakeDatabase from "../database";
 import {showTable} from "./apartementsControl";
 import {hideMap, showMap} from "./map";
+import {hideTodoList, showTodoList} from "./todoList";
 
 const db = new FakeDatabase();
 
@@ -9,20 +10,27 @@ $('#logoutBut').on("click", () => {
 });
 
 $('#changeAppartBut').on("click", () => {
+    hideTodoList();
     hideMap();
     showTable();
 });
 
 $('#map-button').on("click", () => {
-   showMap();
+    if($('#map').is(":visible")){
+        hideMap();
+    } else {
+        $('#changeAppart').hide();
+        $('#createAppart').hide();
+        hideTodoList();
+        showMap();
+    }
 });
 
-// $('#curApartBar').popover({trigger: 'manual'}).on('hover', showPop());
-//
-// function showPop(){
-//     if ($('#curApartBar').data('state') === 'hover') {
-//         $('#curApartBar').popover('show');
-//     }
-// }
+$('#todo-list-button').on("click", () => {
+    hideMap();
+    $('#changeAppart').hide();
+    $('#createAppart').hide();
+    showTodoList();
+});
 
 

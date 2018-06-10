@@ -20,6 +20,8 @@ export default class FakeDatabase{
         const emptyObject = {};
         localStorage.setObject("users", emptyObject);
         localStorage.setObject("aparts", emptyObject);
+        localStorage.setObject("usersToAparts", emptyObject);
+        localStorage.setObject("todos", emptyObject);
     }
 
     registerUser(name, password){
@@ -73,6 +75,10 @@ export default class FakeDatabase{
 
     _getAllUsers(){
         return localStorage.getObject("users")
+    }
+
+    addApartToUser(){
+
     }
 
 
