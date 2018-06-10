@@ -12,10 +12,13 @@
 </head>
 
 <body>
+    <!-- Mobile phones feature -->
     <div class="sorry">Unfortunately, this site does not support small screens</div>
 
+    <!-- Cheat to make background a little darker -->
     <div class="blacky"></div>
 
+    <!--Top navigation bar-->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -37,6 +40,7 @@
         </div>
     </nav>
 
+    <!-- Div with form to change current apartment or it can redirect you to create a new one -->
     <div id="changeAppart" class="changeAppart">
         <form id="appartementForm">
             <div>Choose an appartement you want to see.</div>
@@ -56,6 +60,7 @@
         </form>
     </div>
 
+    <!--Div containing form to create a new apartment-->
     <div id="createAppart" class="changeAppart">
         <form id="appartCreateForm" >
             <div class="form-group">
@@ -76,6 +81,7 @@
         </form>
     </div>
 
+    <!--Div with form to add existing user to your currently selected apartment, thus you can then share to-do cards-->
     <div id="inviteRoommate-layout" class="changeAppart">
         <form id="inviteForm" >
             <div class="form-group">
@@ -89,8 +95,10 @@
         </form>
     </div>
 
+    <!-- Div where Seznam maps are displayed-->
     <div id="map"></div>
 
+    <!--To-do cards layout. Left part contains bin svg icon and plus svg icon. The right part consists of existing to-do cards-->
     <div id="todo-list-layout">
 
         <div id="todo-creator">

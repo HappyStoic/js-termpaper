@@ -3,6 +3,7 @@ import FakeDatabase from './database';
 (function(){
     const database = new FakeDatabase();
 
+    // Simulate session - If I am "logged in", I can be immediately redirect to core functionality
     if(database.isLogin()){
         window.location.replace("application.html");
     } else {
@@ -32,7 +33,7 @@ import FakeDatabase from './database';
 
         } else {
             window.location.replace("application.html");
-            // window.location.reload()
+            window.location.reload() // Reload for sure, I experienced that location replace was not enough.
         }
     }
 

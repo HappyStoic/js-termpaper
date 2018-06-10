@@ -10,6 +10,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var FakeDatabase = function () {
+
+    //**
+    //* This class fakes database. It uses stringify so it's able to store objects to localStorage.
+    //* There is added functionality to localStorage via prototype as you can see in constructor.
+    //* Database can register users, apartments, to-do cards (with their author, links to apartment and content) and
+    //* maps users to apartments so App can distinguish what apartments are linked with certain user.
+    //**
     function FakeDatabase() {
         _classCallCheck(this, FakeDatabase);
 
@@ -22,10 +29,14 @@ var FakeDatabase = function () {
             return value && JSON.parse(value);
         };
 
+        // If app is run for the first time
         if (localStorage.getObject("users") == null) {
             this.initDatabase();
         }
     }
+
+    // Init database with empty values on first run so we do not later get any exception
+
 
     _createClass(FakeDatabase, [{
         key: "initDatabase",
@@ -155,6 +166,9 @@ var FakeDatabase = function () {
                 return todo.apart === apartment;
             });
         }
+
+        // Parse information about to-do gained via drag and drop data travel and then remove certain to-do card from db.
+
     }, {
         key: "eraseTodo",
         value: function eraseTodo(text, apart) {
@@ -190,6 +204,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (function () {
     var database = new _database2.default();
 
+    // Simulate session - If I am "logged in", I can be immediately redirect to core functionality
     if (database.isLogin()) {
         window.location.replace("application.html");
     } else {
@@ -221,7 +236,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             showErrorUnderSignIn("Input wrong username or password.");
         } else {
             window.location.replace("application.html");
-            // window.location.reload()
+            window.location.reload(); // Reload for sure, I experienced that location replace was not enough.
         }
     }
 

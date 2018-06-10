@@ -3,15 +3,16 @@
 body{
   margin: 0; // To avoid default margin/padding at top of the page by some browsers
   padding: 0;
-  background-image: url("../../resources/apartment-1851201_1920.jpg");
+  background-image: url("../../resources/apartment.jpg");
   z-index: -2;
-  height: 100vh; //TODO just test
+  height: 100vh;
   width: 100vw;
 
   display: flex;
   flex-direction: column;
 }
 
+// Sharpen bootstrap elements (they are hardly used anyway)
 .btn, .form-control{
   border-radius: 0;
 }
@@ -24,18 +25,18 @@ body{
   z-index: -1;
 }
 
+// Component shown only for mobile devices
 .sorry{
   display: none;
 }
 
 .navbar {
 
-
   // Overwriting default bootstrap values
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background-color: gray;
   border: gray solid;
-  border-radius: 0px;
+  border-radius: 0;
 
   .my-nav-header, .my-nav-header-intro{
     color: white;
@@ -203,10 +204,6 @@ body{
         transform: rotate(2deg);
         fill: red; stroke: red;
       }
-      //&:hover *{
-      //  transform: rotate(2deg);
-      //  fill: red; stroke: red;
-      //}
     }
   }
 
@@ -240,6 +237,8 @@ body{
   }
 }
 
+// On mobile devices I show only sorry class in the middle of the screen and change background image. ALl other elements
+// are hidden.
 @media all and (max-width:600px){
   body{
     background-image: url("../../resources/fire.jpg");
@@ -251,7 +250,6 @@ body{
     width: 100vw;
     height: 100vh;
   }
-
 
   .sorry{
     margin: 15px 15px 15px 15px;
@@ -266,12 +264,9 @@ body{
   #changeAppart{
     display: none;
   }
-
-
   .navbar{
     display: none;
   }
-
   .changeAppart{
     display: none;
   }

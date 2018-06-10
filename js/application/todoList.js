@@ -4,11 +4,17 @@ export {showTodoList, hideTodoList};
 
 const db = new FakeDatabase();
 
+//**
+//* File handling javascript functionality of to-do cards including its drag and drop functions.
+//**
+
+// Show all to-do list which are linked with current apartment being adjusted.
 function showTodoList(){
     $('#todo-list-right').html("");
 
     const curApart = localStorage.getObject("curApart");
     if(curApart === null) {
+        // If apartment is not yet chosen, show only layout.
         $('#todo-list-layout').show();
         return;
     }
@@ -19,6 +25,7 @@ function showTodoList(){
     });
 
 
+    // Every to-do card has dragStart event listener
     ($(".todoCard")).toArray().forEach((elem) => {
         elem.addEventListener("dragstart", onStartDragging, false);
     });
@@ -31,6 +38,7 @@ function hideTodoList(){
     $('#todo-list-layout').hide();
 }
 
+// User wants to add new to-do card
 $('#plus-symbol').on("click", () => {
     if(localStorage.getObject("curApart") === null){
         alert("Apartment has to be selected first.");
@@ -39,6 +47,7 @@ $('#plus-symbol').on("click", () => {
     $('#todo-creator').show();
 });
 
+// User is creating new to-do card
 $('#addTodoConfirm').on("click", () => {
     const $textArea = $('#todoTextArea');
     const todoText = $textArea.val().trim();
@@ -52,7 +61,8 @@ $('#addTodoConfirm').on("click", () => {
     $('#todo-creator').hide();
 });
 
-function showCard(author, todoText, without){
+// Show certain card in table
+function showCard(author, todoText){
     const createdBy = "<span>" + author + "</span>";
     const text =  createdBy + "<br>" + todoText;
     const lineHtml = "<div class=\"todoCard\" draggable='true'>" + text + "</div>";

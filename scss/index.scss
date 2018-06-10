@@ -1,16 +1,18 @@
 @import "bootstrap";
 
 body{
-  background-image: url("../../resources/apartment-1851201_1920.jpg");
+  background-image: url("../../resources/apartment.jpg");
   z-index: -2;
   overflow-y: hidden;
   overflow-x: hidden;
 }
 
+// Sharpen bootstrap elements (they are hardly used anyway)
 .btn, .form-control{
   border-radius: 0;
 }
 
+// Component shown only for mobile devices
 .sorry{
   display: none;
 }
@@ -83,7 +85,6 @@ body{
   form {
     padding: 40px;
     background-color: white;
-    //border-radius: 10px;
     width: 25%;
     font-size: 2em;
 
@@ -105,6 +106,8 @@ body{
   }
 }
 
+// On mobile devices I show only sorry class in the middle of the screen and change background image. ALl other elements
+// are hidden.
 @media all and (max-width:600px){
     body{
       background-image: url("../../resources/fire.jpg");

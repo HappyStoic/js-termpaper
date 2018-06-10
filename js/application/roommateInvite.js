@@ -4,6 +4,11 @@ export {showInvite, hideInvite}
 
 const db = new FakeDatabase();
 
+//**
+//* File handling form which allows logged user to add another user to apartment he's currently adjusting
+//* (New user must be already registered! )
+//**
+
 function showInvite(){
     $('#inviteRoommate-layout').show();
 }

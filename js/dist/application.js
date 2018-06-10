@@ -17,11 +17,17 @@ exports.showTable = showTable;
 
 var db = new _database2.default();
 
+//**
+//* File handling form which allows user to choose apartment he wants to adjust or to show form to create a new apartment.
+//* Always only one form of these is visible (!!!)
+//**
+
 function addTableRecord(name, address) {
     var lineHtml = "<tr>\n" + "                    <td>" + name + "</td>\n" + "                    <td>" + address + "</td>\n" + "                </tr>";
     $('#apartTable').append(lineHtml);
 }
 
+// Show table with all apartments which are linked with logged user
 function showTable() {
     $('#apartTable').html("");
     var allAparts = db.getApartsOfLoggedUser();
@@ -42,6 +48,7 @@ $('#backToTable').on("click", function () {
     showTable();
 });
 
+// Creating new apartment.
 $('#submitApart').on("click", function () {
     var name = $('#apartname').val().trim();
     var address = $('#apartaddress').val().trim();
@@ -57,13 +64,12 @@ $('#submitApart').on("click", function () {
     }
 });
 
+// Choosing current apartment from table
 $('#apartTable').on("click", function (e) {
     var clickedName = $(e.target).parent().children().get(0).innerText;
     localStorage.setObject("curApart", clickedName);
     $('#changeAppart').hide();
     $('#curApartBar').text(clickedName);
-
-    //TODO jestli je neco ukazano z predchoziho bytu, tak to schovej
 });
 
 },{"../database":7}],2:[function(require,module,exports){
@@ -85,8 +91,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var db = new _database2.default();
 
-$("body").get(0).addEventListener("click", function (e) {
+//**
+//* Code which is not unique enough to be in its own file
+//**
 
+
+// If user clicked out of certain forms then I will hide them
+$("body").get(0).addEventListener("click", function (e) {
     var $target = $(e.target);
     if (!$target.closest("#appartementForm").length) {
         $('#changeAppart').hide();
@@ -105,11 +116,12 @@ $("body").get(0).addEventListener("click", function (e) {
     }
 }, true);
 
+// If no user is "logged in", I will redirect him to index page, where he can sign in or register
 if (localStorage.getObject("login") === null) {
     window.location.replace("index.html");
 }
 
-// Init todo comment
+// User is logged in. Ok, then I will hide all forms which are not supposed to be seen from the start
 localStorage.removeItem("curApart");
 $('#createAppart').hide();
 $('#todo-creator').hide();
@@ -117,6 +129,8 @@ $('#todo-creator').hide();
 (0, _todoList.hideTodoList)();
 (0, _roommateInvite.hideInvite)();
 
+// If user is not using mobile device I will show him table where he can choose apartment to adjust.
+// (I won't be showing anything if he/she is using mobile device)
 if (!window.matchMedia('(max-width: 600px)').matches) {
     (0, _apartementsControl.showTable)();
 }
@@ -138,29 +152,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.showMap = showMap;
 exports.hideMap = hideMap;
 
+//**
+//* Asynchronous loading of Seznam maps via seznam maps api.
+//**
 
 var db = new _database2.default();
 var mapLoadedAlready = false; // Initial variable to describe state
-var mapForApart = null; // If curApart is different -> I need to reload map
-var defaultCoords = { x: 14.41790, y: 50.12655 }; // Coords for center of Prague
+var mapForApart = null; // If curApart and this variable are not the same -> I need to reload map
+var defaultCoords = { x: 14.41790, y: 50.12655 }; // Coords for center of Prague, default values
 
 function showMap() {
     if (!mapLoadedAlready || mapForApart !== getCurApartment()) {
         initMap();
     } else {
-        $('#map').show();
+        $('#map').show(); // Map was already loaded, I can only show her, do not need to make new requests.
     }
 }
 
 function initMap() {
     var curAddress = db.getAddressOfCurApart();
     if (curAddress === null) {
+        // Apartment was not yet chosen - show Prague.
         Loader.async = true;
         Loader.load(null, null, createMap(defaultCoords));
         return;
     }
 
-    new SMap.Geocoder(curAddress, response);
+    new SMap.Geocoder(curAddress, response); // Make request for coordinates for current address
 }
 
 function createMap(coords) {
@@ -173,7 +191,7 @@ function createMap(coords) {
     m.addDefaultControls();
     m.addDefaultLayer(SMap.DEF_BASE).enable();
 
-    // If I'm showing valid user address, I add mark pointer on the map
+    // If I'm showing valid user address, I add mark pointer on the map for better user experience :D
     if (coords !== defaultCoords) {
         var layer = new SMap.Layer.Marker();
         m.addLayer(layer);
@@ -190,6 +208,7 @@ function createMap(coords) {
 
 function response(geocoder) {
     if (!geocoder.getResults()[0].results.length) {
+        // Not valid result
         alert("Not valid address. Showing Prague.");
         Loader.async = true;
         Loader.load(null, null, createMap(defaultCoords));
@@ -199,6 +218,7 @@ function response(geocoder) {
         var res = geocoder.getResults()[0].results;
         var resultCoords = void 0;
 
+        // Take first most valid result and show to user in alert what he's going to see on map.
         var data = [];
         var item = res.shift();
         resultCoords = { x: item.coords.x, y: item.coords.y };
@@ -207,7 +227,7 @@ function response(geocoder) {
         alert(data.join("\n"));
 
         Loader.async = true;
-        Loader.load(null, null, createMap(resultCoords));
+        Loader.load(null, null, createMap(resultCoords)); // Finally make request for the map with given coordinates
     } catch (e) {
         alert("Some error occurred. Showing Prague.");
         Loader.async = true;
@@ -242,10 +262,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var db = new _database2.default();
 
+//**
+//* This file handles clicking on navigation buttons on navigation top bar
+//* Basically on every click all not needed elements are hidden and the required one is shown - see below.
+//**
+
 $('#logoutBut').on("click", function () {
     db.logout();
 });
 
+// Shows form to choose current apartment to adjust.
 $('#changeAppartBut').on("click", function () {
     (0, _todoList.hideTodoList)();
     $('#createAppart').hide();
@@ -255,6 +281,7 @@ $('#changeAppartBut').on("click", function () {
 });
 
 $('#map-button').on("click", function () {
+    // This button works as toggle.
     if ($('#map').is(":visible")) {
         (0, _map.hideMap)();
     } else {
@@ -275,6 +302,7 @@ $('#todo-list-button').on("click", function () {
 });
 
 $('#addRoommateBut').on("click", function () {
+    // I cannot add roommate to <non> apartment
     if (localStorage.getObject("curApart") === null) {
         alert("Apartment has to be selected first.");
         return;
@@ -305,6 +333,11 @@ exports.hideInvite = hideInvite;
 
 
 var db = new _database2.default();
+
+//**
+//* File handling form which allows logged user to add another user to apartment he's currently adjusting
+//* (New user must be already registered! )
+//**
 
 function showInvite() {
     $('#inviteRoommate-layout').show();
@@ -347,11 +380,17 @@ exports.hideTodoList = hideTodoList;
 
 var db = new _database2.default();
 
+//**
+//* File handling javascript functionality of to-do cards including its drag and drop functions.
+//**
+
+// Show all to-do list which are linked with current apartment being adjusted.
 function showTodoList() {
     $('#todo-list-right').html("");
 
     var curApart = localStorage.getObject("curApart");
     if (curApart === null) {
+        // If apartment is not yet chosen, show only layout.
         $('#todo-list-layout').show();
         return;
     }
@@ -361,6 +400,7 @@ function showTodoList() {
         showCard(todo.author, todo.text);
     });
 
+    // Every to-do card has dragStart event listener
     $(".todoCard").toArray().forEach(function (elem) {
         elem.addEventListener("dragstart", onStartDragging, false);
     });
@@ -372,6 +412,7 @@ function hideTodoList() {
     $('#todo-list-layout').hide();
 }
 
+// User wants to add new to-do card
 $('#plus-symbol').on("click", function () {
     if (localStorage.getObject("curApart") === null) {
         alert("Apartment has to be selected first.");
@@ -380,6 +421,7 @@ $('#plus-symbol').on("click", function () {
     $('#todo-creator').show();
 });
 
+// User is creating new to-do card
 $('#addTodoConfirm').on("click", function () {
     var $textArea = $('#todoTextArea');
     var todoText = $textArea.val().trim();
@@ -392,7 +434,8 @@ $('#addTodoConfirm').on("click", function () {
     $('#todo-creator').hide();
 });
 
-function showCard(author, todoText, without) {
+// Show certain card in table
+function showCard(author, todoText) {
     var createdBy = "<span>" + author + "</span>";
     var text = createdBy + "<br>" + todoText;
     var lineHtml = "<div class=\"todoCard\" draggable='true'>" + text + "</div>";
@@ -448,6 +491,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var FakeDatabase = function () {
+
+    //**
+    //* This class fakes database. It uses stringify so it's able to store objects to localStorage.
+    //* There is added functionality to localStorage via prototype as you can see in constructor.
+    //* Database can register users, apartments, to-do cards (with their author, links to apartment and content) and
+    //* maps users to apartments so App can distinguish what apartments are linked with certain user.
+    //**
     function FakeDatabase() {
         _classCallCheck(this, FakeDatabase);
 
@@ -460,10 +510,14 @@ var FakeDatabase = function () {
             return value && JSON.parse(value);
         };
 
+        // If app is run for the first time
         if (localStorage.getObject("users") == null) {
             this.initDatabase();
         }
     }
+
+    // Init database with empty values on first run so we do not later get any exception
+
 
     _createClass(FakeDatabase, [{
         key: "initDatabase",
@@ -593,6 +647,9 @@ var FakeDatabase = function () {
                 return todo.apart === apartment;
             });
         }
+
+        // Parse information about to-do gained via drag and drop data travel and then remove certain to-do card from db.
+
     }, {
         key: "eraseTodo",
         value: function eraseTodo(text, apart) {

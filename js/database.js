@@ -1,6 +1,11 @@
 export default class FakeDatabase{
 
-
+    //**
+    //* This class fakes database. It uses stringify so it's able to store objects to localStorage.
+    //* There is added functionality to localStorage via prototype as you can see in constructor.
+    //* Database can register users, apartments, to-do cards (with their author, links to apartment and content) and
+    //* maps users to apartments so App can distinguish what apartments are linked with certain user.
+    //**
     constructor() {
         Storage.prototype.setObject = function(key, value) {
             this.setItem(key, JSON.stringify(value));
@@ -11,11 +16,13 @@ export default class FakeDatabase{
             return value && JSON.parse(value);
         };
 
+        // If app is run for the first time
         if(localStorage.getObject("users") == null){
             this.initDatabase()
         }
     }
 
+    // Init database with empty values on first run so we do not later get any exception
     initDatabase(){
         const emptyObject = {};
         const emptyArray = [];
@@ -130,6 +137,7 @@ export default class FakeDatabase{
         });
     }
 
+    // Parse information about to-do gained via drag and drop data travel and then remove certain to-do card from db.
     eraseTodo(text, apart){
         let content = text.substring(text.indexOf("<br>")+4, text.length);
         let author = $(text).filter("span").get(0).innerText;
@@ -143,6 +151,5 @@ export default class FakeDatabase{
             }
         }
         localStorage.setObject("todos", todos);
-
     }
 }

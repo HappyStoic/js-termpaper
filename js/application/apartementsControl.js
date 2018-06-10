@@ -4,15 +4,20 @@ export {showTable}
 
 const db = new FakeDatabase();
 
+//**
+//* File handling form which allows user to choose apartment he wants to adjust or to show form to create a new apartment.
+//* Always only one form of these is visible (!!!)
+//**
+
 function addTableRecord(name, address){
     const lineHtml = "<tr>\n" +
         "                    <td>" + name + "</td>\n" +
         "                    <td>" + address + "</td>\n" +
         "                </tr>";
     $('#apartTable').append(lineHtml);
-
 }
 
+// Show table with all apartments which are linked with logged user
 function showTable(){
     $('#apartTable').html("");
     const allAparts = db.getApartsOfLoggedUser();
@@ -34,6 +39,7 @@ $('#backToTable').on("click", () => {
 });
 
 
+// Creating new apartment.
 $('#submitApart').on("click", () => {
     const name = $('#apartname').val().trim();
     const address = $('#apartaddress').val().trim();
@@ -49,11 +55,10 @@ $('#submitApart').on("click", () => {
     }
 });
 
+// Choosing current apartment from table
 $('#apartTable').on("click", (e) => {
     const clickedName = $(e.target).parent().children().get(0).innerText;
     localStorage.setObject("curApart", clickedName);
     $('#changeAppart').hide();
     $('#curApartBar').text(clickedName);
-
-    //TODO jestli je neco ukazano z predchoziho bytu, tak to schovej
 });
