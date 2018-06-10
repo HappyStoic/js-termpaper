@@ -116,7 +116,10 @@ $('#todo-creator').hide();
 (0, _map.hideMap)();
 (0, _todoList.hideTodoList)();
 (0, _roommateInvite.hideInvite)();
-(0, _apartementsControl.showTable)();
+
+if (!window.matchMedia('(max-width: 600px)').matches) {
+    (0, _apartementsControl.showTable)();
+}
 
 },{"./../database":7,"./apartementsControl":1,"./map":3,"./roommateInvite":5,"./todoList":6}],3:[function(require,module,exports){
 'use strict';

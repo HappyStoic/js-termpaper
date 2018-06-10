@@ -32,6 +32,7 @@ if(localStorage.getObject("login") === null){
     window.location.replace("index.html");
 }
 
+
 // Init todo comment
 localStorage.removeItem("curApart");
 $('#createAppart').hide();
@@ -39,4 +40,7 @@ $('#todo-creator').hide();
 hideMap();
 hideTodoList();
 hideInvite();
-showTable();
+
+if (!window.matchMedia('(max-width: 600px)').matches) {
+    showTable();
+}
