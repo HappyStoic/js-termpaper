@@ -22,8 +22,8 @@ import FakeDatabase from './database';
     $('#signUpButton').on("click", () => signUpButtonClicked());
 
     function signInButtonClicked(){
-        const username = $('#usernameLogin').val().trim();
-        const password = $('#passwordLogin').val().trim();
+        let username = $('#usernameLogin').val().trim();
+        let password = $('#passwordLogin').val().trim();
 
         if(username === "" || password === ""){
             showErrorUnderSignIn("All fields must be filled.");
@@ -38,9 +38,9 @@ import FakeDatabase from './database';
     }
 
     function signUpButtonClicked(){
-        const username = $('#usernameRegister').val().trim();
-        const password1 = $('#passwordRegister1').val().trim();
-        const password2 = $('#passwordRegister2').val().trim();
+        let username = $('#usernameRegister').val().trim();
+        let password1 = $('#passwordRegister1').val().trim();
+        let password2 = $('#passwordRegister2').val().trim();
 
         if(username === "" || password1 === "" || password2 === ""){
             showErrorUnderSignUp("All fields must be filled.");
@@ -56,4 +56,5 @@ import FakeDatabase from './database';
             showErrorUnderSignUp("Username already exists.");
         }
     }
+
 })();
