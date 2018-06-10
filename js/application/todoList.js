@@ -58,6 +58,9 @@ function showCard(author, todoText, without){
     const lineHtml = "<div class=\"todoCard\" draggable='true'>" + text + "</div>";
 
     $('#todo-list-right').append(lineHtml);
+
+    const allCards = ($(".todoCard")).toArray();
+    allCards[allCards.length-1].addEventListener("dragstart", onStartDragging, false);
 }
 
 function onStartDragging(ev){

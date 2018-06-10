@@ -3,14 +3,17 @@
 body{
   background-image: url("../../resources/apartment-1851201_1920.jpg");
   z-index: -2;
-
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .btn, .form-control{
   border-radius: 0;
 }
 
-
+.sorry{
+  display: none;
+}
 
 .blacky {
   background-color: rgba(0, 0, 0, 0.4);
@@ -100,4 +103,32 @@ body{
       padding: 20px 15px;
     }
   }
+}
+
+@media (max-width:600px){
+    body{
+      background-image: url("../../resources/fire.jpg");
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      align-content: space-around;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .sorry{
+      margin: 15px 15px 15px 15px;
+      color: white;
+      font-size: 2em;
+      display: flex;
+    }
+
+    .loginPage{
+      display: none;
+    }
+
+    .intro{
+      display: none;
+    }
 }

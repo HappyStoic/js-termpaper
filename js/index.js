@@ -32,6 +32,7 @@ import FakeDatabase from './database';
 
         } else {
             window.location.replace("application.html");
+            // window.location.reload()
         }
     }
 

@@ -221,6 +221,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             showErrorUnderSignIn("Input wrong username or password.");
         } else {
             window.location.replace("application.html");
+            // window.location.reload()
         }
     }
 

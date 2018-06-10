@@ -232,9 +232,36 @@ body{
         color: blue;
         font-style: italic;
       }
-
     }
   }
+}
 
+@media (max-width:600px){
+  body{
+    background-image: url("../../resources/fire.jpg");
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    align-content: space-around;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
 
+  .sorry{
+    margin: 15px 15px 15px 15px;
+    color: white;
+    font-size: 2em;
+    display: flex;
+  }
+
+  .navbar{
+    display: none;
+  }
+  .changeAppart{
+    display: none;
+  }
+  .intro{
+    display: none;
+  }
 }
