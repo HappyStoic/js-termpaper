@@ -56,3 +56,4 @@ My humble summary so you do not have to search for every detail
 | Completness           | Eh :/               |
 | Appearance            | Ehm :(              |
 
+I also recommend to look at already mentioned full [documentation](documentation)
