@@ -427,7 +427,7 @@ $('#addTodoConfirm').on("click", function () {
     var todoText = $textArea.val().trim();
     if (todoText === "") return;
 
-    $textArea.text("");
+    $textArea.val('');
     var author = localStorage.getObject("login");
     db.createNewTodoCard(author, localStorage.getObject("curApart"), todoText);
     showCard(author, todoText);
